@@ -1,0 +1,8 @@
+{
+  "firstName": "Jan",
+  "age": 23,
+  "address": {
+    "country": "Polska",
+    "city": "Cieszyn"
+  }
+}
