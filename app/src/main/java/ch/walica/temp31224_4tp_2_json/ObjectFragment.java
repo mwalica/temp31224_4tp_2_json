@@ -1,5 +1,6 @@
 package ch.walica.temp31224_4tp_2_json;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -47,13 +48,15 @@ public class ObjectFragment extends Fragment {
 
         btnShowObj.setOnClickListener(v -> {
             try {
-                JSONObject person = new JSONObject(loadJSONFromAssets("person.json"));
-                String firstName = person.getString("firstName");
-                int age = person.getInt("age");
-                JSONObject address = person.getJSONObject("address");
-                String country = address.getString("country");
-                String city = address.getString("city");
-                String msg = firstName + " " + age + "\n" + country + " " + city;
+                JSONObject jsonObject = new JSONObject(loadJSONFromAssets("person.json", requireActivity()));
+                String firstName = jsonObject.getString("firstName");
+                int age = jsonObject.getInt("age");
+                JSONObject jsonAddress = jsonObject.getJSONObject("address");
+                String country = jsonAddress.getString("country");
+                String city = jsonAddress.getString("city");
+                Person person = new Person(firstName, age, new Address(country, city));
+
+                String msg = person.firstName() + " " + person.age() + "\n" + person.address().city() + " " + person.address().country();
                 tvResult1.setText(msg);
             } catch (JSONException error) {
                 Log.d("my_log", "error: " + error.getLocalizedMessage());
@@ -62,10 +65,10 @@ public class ObjectFragment extends Fragment {
         });
     }
 
-    private String loadJSONFromAssets(String file) {
+    public static String loadJSONFromAssets(String file, Activity activity) {
         String json = null;
         try {
-            InputStream inputStream = requireActivity().getAssets().open(file);
+            InputStream inputStream = activity.getAssets().open(file);
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);

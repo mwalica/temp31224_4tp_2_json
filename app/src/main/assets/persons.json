@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Jan",
+    "age": 23,
+    "address": {
+      "country": "Polska",
+      "city": "Cieszyn"
+    }
+  },
+  {
+    "firstName": "Anna",
+    "age": 34,
+    "address": {
+      "country": "Polska",
+      "city": "Katowice"
+    }
+  },
+  {
+    "firstName": "Adam",
+    "age": 32,
+    "address": {
+      "country": "Polska",
+      "city": "Warszawa"
+    }
+  }
+]
