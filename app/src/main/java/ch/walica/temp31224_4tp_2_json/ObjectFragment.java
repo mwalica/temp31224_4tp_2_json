@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,22 +48,25 @@ public class ObjectFragment extends Fragment {
         Button btnShowObj = view.findViewById(R.id.btnShowObj);
         TextView tvResult1 = view.findViewById(R.id.tvResult1);
 
+        Gson gson = new Gson();
+
         btnShowObj.setOnClickListener(v -> {
-            try {
-                JSONObject jsonObject = new JSONObject(loadJSONFromAssets("person.json", requireActivity()));
-                String firstName = jsonObject.getString("firstName");
-                int age = jsonObject.getInt("age");
-                JSONObject jsonAddress = jsonObject.getJSONObject("address");
-                String country = jsonAddress.getString("country");
-                String city = jsonAddress.getString("city");
-                Person person = new Person(firstName, age, new Address(country, city));
-
-                String msg = person.firstName() + " " + person.age() + "\n" + person.address().city() + " " + person.address().country();
-                tvResult1.setText(msg);
-            } catch (JSONException error) {
-                Log.d("my_log", "error: " + error.getLocalizedMessage());
-            }
-
+//            try {
+//                JSONObject jsonObject = new JSONObject(loadJSONFromAssets("person.json", requireActivity()));
+//                String firstName = jsonObject.getString("firstName");
+//                int age = jsonObject.getInt("age");
+//                JSONObject jsonAddress = jsonObject.getJSONObject("address");
+//                String country = jsonAddress.getString("country");
+//                String city = jsonAddress.getString("city");
+//                Person person = new Person(firstName, age, new Address(country, city));
+//
+//                String msg = person.firstName() + " " + person.age() + "\n" + person.address().city() + " " + person.address().country();
+//                tvResult1.setText(msg);
+//            } catch (JSONException error) {
+//                Log.d("my_log", "error: " + error.getLocalizedMessage());
+//            }
+            Person person = gson.fromJson(loadJSONFromAssets("person.json", requireActivity()), Person.class);
+            Log.d("my_log", "person.address: " + person.address().country());
         });
     }
 
